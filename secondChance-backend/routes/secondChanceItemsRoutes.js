@@ -68,7 +68,7 @@ router.post('/', upload.single('file'), async(req, res,next) => {
         secondChanceItem = await collection.insertOne(secondChanceItem);
 
         //Step 3: task 5 - insert code here
-        return res.status(201).json(secondChanceItem.ops[0]);
+        return res.status(201).json(secondChanceItem);
     } catch (e) {
         next(e);
     }
@@ -90,7 +90,7 @@ router.get('/:id', async (req, res, next) => {
 
         //Step 4: task 4 - insert code here
         if (!secondChanceItem) {
-            return res.status(404).send("secondChanceItem not found");
+            return res.status(404).json({ message: "secondChanceItem not found" });
         }
 
         return res.json(secondChanceItem);
@@ -115,7 +115,7 @@ router.put('/:id', async(req, res,next) => {
 
         if (!secondChanceItem) {
           logger.error('secondChanceItem not found');
-          return res.status(404).json({ error: "secondChanceItem not found" });
+          return res.status(404).json({ message: "secondChanceItem not found" });
         }
 
         //Step 5: task 4 - insert code here
@@ -134,9 +134,9 @@ router.put('/:id', async(req, res,next) => {
 
         //Step 5: task 5 - insert code here
         if(updatepreloveItem) {
-            return res.json({"uploaded":"success"});
+            return res.json({ uploaded: "success"});
         } else {
-            return res.json({"uploaded":"failed"});
+            return res.json({ uploaded: "failed"});
         }
     } catch (e) {
         next(e);
@@ -159,7 +159,7 @@ router.delete('/:id', async(req, res,next) => {
 
         if (!secondChanceItem) {
           logger.error('secondChanceItem not found');
-          return res.status(404).json({ error: "secondChanceItem not found" });
+          return res.status(404).json({ message: "secondChanceItem not found" });
         }
 
         //Step 6: task 4 - insert code here
