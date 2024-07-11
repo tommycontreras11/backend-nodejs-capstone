@@ -3,7 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const pinoLogger = require('./logger');
-
+const secondChanceItemsRoutes = require('./routes/secondChanceItemsRoutes');
 const connectToDatabase = require('./models/db');
 const {loadData} = require("./util/import-mongo/index");
 
@@ -58,6 +58,8 @@ app.use((err, req, res, next) => {
 app.get("/",(req,res)=>{
     res.send("Inside the server")
 })
+
+app.use('/api/secondchance/items', secondChanceItemsRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
