@@ -35,8 +35,8 @@ function RegisterPage() {
 
         // console.log('ers',json.errors);
 
-        if (json.authtoken) {
-            sessionStorage.setItem('auth-token', json.authtoken);
+        if (json.authToken) {
+            sessionStorage.setItem('auth-token', json.authToken);
             sessionStorage.setItem('name', firstName);
             sessionStorage.setItem('email', json.email);
             navigate('/app');

@@ -59,7 +59,7 @@ router.post("/register", async (req, res) => {
 });
 
 // Sign in
-router.post("/signIn", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     // Task 1: Connect to `secondChance` in MongoDB through `connectToDatabase` in `db.js`.
     const db = await connectToDatabase();
