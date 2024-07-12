@@ -141,6 +141,7 @@ router.put("/update", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
+    findUser.firstName = req.body.name;
     findUser.updatedAt = new Date();
 
     // Task 6: Update the user credentials in the database
@@ -155,7 +156,7 @@ router.put("/update", async (req, res) => {
         id: updatedUser._id.toString(),
       },
     };
-    
+
     const authtoken = jwt.sign(payload, JWT_SECRET);
 
     return res.json({ authtoken });
