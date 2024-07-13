@@ -36,13 +36,13 @@ router.post('/', upload.single('file'), async (req, res, next) => {
     const collection = db.collection('secondChanceItems')
     let secondChanceItem = req.body
 
-    const lastItemQuery = await collection.find().sort({ 'id': -1 }).limit(1)
+    const lastItemQuery = await collection.find().sort({ id: -1 }).limit(1)
     await lastItemQuery.forEach(item => {
       secondChanceItem.id = (parseInt(item.id) + 1).toString()
     })
 
-    const date_added = Math.floor(new Date().getTime() / 1000)
-    secondChanceItem.date_added = date_added
+    const dateAdded = Math.floor(new Date().getTime() / 1000)
+    secondChanceItem.dateAdded = dateAdded
 
     secondChanceItem = await collection.insertOne(secondChanceItem)
 
@@ -117,7 +117,7 @@ router.delete('/:id', async (req, res, next) => {
     }
 
     await collection.deleteOne({ id })
-    return res.json({ 'deleted': 'success' })
+    return res.json({ deleted: 'success' })
   } catch (e) {
     next(e)
   }
