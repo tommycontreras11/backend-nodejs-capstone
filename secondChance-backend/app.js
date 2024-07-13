@@ -1,4 +1,3 @@
-/*jshint esversion: 8 */
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -11,7 +10,6 @@ const app = express();
 app.use("*",cors());
 const port = 3060;
 
-// Connect to MongoDB; we just do this one time
 connectToDatabase().then(() => {
     pinoLogger.info('Connected to DB');
 })
@@ -19,7 +17,6 @@ connectToDatabase().then(() => {
 
 app.use(express.json());
 
-// Route files
 const secondChanceRoutes = require('./routes/secondChanceItemsRoutes');
 const authRoutes = require('./routes/authRoutes');
 const searchRoutes = require('./routes/searchRoutes');
@@ -29,19 +26,19 @@ const logger = require('./logger');
 app.use(pinoHttp({ logger }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Use Routes
 app.use('/api/secondchance/items', secondChanceRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/secondchance/search', searchRoutes);
 
-// Global Error Handler
-app.use((err, req, res, next) => {
+app.use((err, _req, res, _next) => {
     console.error(err);
     res.status(500).send('Internal Server Error');
 });
-app.get("/",(req,res)=>{
+
+app.get("/",(_req, res)=>{
     res.send("Inside the server")
 })
+
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

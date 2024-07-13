@@ -1,8 +1,6 @@
-// db.js
 require('dotenv').config();
 const MongoClient = require('mongodb').MongoClient;
 
-// MongoDB connection URL with authentication options
 let url = `${process.env.MONGO_URL}`;
 
 let dbInstance = null;
