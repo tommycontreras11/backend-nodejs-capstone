@@ -1,42 +1,42 @@
-require('dotenv').config();
-const MongoClient = require('mongodb').MongoClient;
-const fs = require('fs');
+require('dotenv').config()
+const MongoClient = require('mongodb').MongoClient
+const fs = require('fs')
+const path = require('path')
 
-let url = `${process.env.MONGO_URL}`;
-let filename = `${__dirname}/secondChanceItems.json`;
-const dbName = 'secondChance';
-const collectionName = 'secondChanceItems';
+const url = process.env.MONGO_URL
+const filename = path.join(__dirname, 'secondChanceItems.json')
+const dbName = 'secondChance'
+const collectionName = 'secondChanceItems'
 
-const data = JSON.parse(fs.readFileSync(filename, 'utf8')).docs;
+const data = JSON.parse(fs.readFileSync(filename, 'utf8')).docs
 
 async function loadData() {
-    const client = new MongoClient(url);
+    const client = new MongoClient(url)
 
     try {
-        await client.connect();
-        console.log("Connected successfully to server");
+        await client.connect()
+        console.log("Connected successfully to server")
 
-        const db = client.db(dbName);
+        const db = client.db(dbName)
+        const collection = db.collection(collectionName)
+        const cursor = await collection.find({})
+        const documents = await cursor.toArray()
 
-        const collection = db.collection(collectionName);
-        let cursor = await collection.find({});
-        let documents = await cursor.toArray();
-
-        if(documents.length == 0) {
-            const insertResult = await collection.insertMany(data);
-            console.log('Inserted documents:', insertResult.insertedCount);
+        if (documents.length === 0) {
+            const insertResult = await collection.insertMany(data)
+            console.log('Inserted documents:', insertResult.insertedCount)
         } else {
-            console.log("Items already exists in DB")
+            console.log("Items already exist in DB")
         }
     } catch (err) {
-        console.error(err);
+        console.error(err)
     } finally {
-        await client.close();
+        await client.close()
     }
 }
 
-loadData();
+loadData()
 
 module.exports = {
-    loadData,
-  };
+    loadData
+}
