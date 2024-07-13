@@ -7,15 +7,15 @@ const logger = require('../logger')
 const directoryPath = 'public/images'
 
 const storage = multer.diskStorage({
-  destination: function (_req, _file, cb) {
+  destination(_req, _file, cb) {
     cb(null, directoryPath)
   },
-  filename: function (req, file, cb) {
+  filename(req, file, cb) {
     cb(null, file.originalname)
   }
 })
 
-const upload = multer({ storage: storage })
+const upload = multer({ storage })
 
 router.get('/', async (_req, res, next) => {
   logger.info('/ called')
