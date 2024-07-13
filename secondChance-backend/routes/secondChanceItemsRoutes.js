@@ -7,10 +7,10 @@ const logger = require('../logger')
 const directoryPath = 'public/images'
 
 const storage = multer.diskStorage({
-  destination(_req, _file, cb) {
+  destination (_req, _file, cb) {
     cb(null, directoryPath)
   },
-  filename(req, file, cb) {
+  filename (req, file, cb) {
     cb(null, file.originalname)
   }
 })
