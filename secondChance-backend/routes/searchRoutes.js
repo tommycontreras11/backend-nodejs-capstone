@@ -8,7 +8,7 @@ router.get('/', async (req, res, next) => {
     const db = await connectToDatabase()
     const collection = db.collection(process.env.MONGO_COLLECTION)
 
-    let query = {}
+    const query = {}
 
     if (req.query.name && req.query.name.trim() !== '') {
       query.name = { $regex: req.query.name, $options: 'i' }
@@ -17,11 +17,11 @@ router.get('/', async (req, res, next) => {
     if (req.query.category) {
       query.category = req.query.category
     }
-    
+
     if (req.query.condition) {
       query.condition = req.query.condition
     }
-    
+
     if (req.query.age_years) {
       query.age_years = { $lte: parseInt(req.query.age_years) }
     }
