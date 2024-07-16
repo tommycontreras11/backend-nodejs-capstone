@@ -36,10 +36,12 @@ router.post('/', upload.single('file'), async (req, res, next) => {
     const collection = db.collection('secondChanceItems')
     let secondChanceItem = req.body
 
-    const lastItemQuery = await collection.find().sort({ id: -1 }).limit(1)
+    const lastItemQuery = await collection.find().sort({ 'id': -1 }).limit(1)
     await lastItemQuery.forEach(item => {
       secondChanceItem.id = (parseInt(item.id) + 1).toString()
     })
+
+    secondChanceItem.id = secondChanceItem.id ? secondChanceItem.id : "1"
 
     const dateAdded = Math.floor(new Date().getTime() / 1000)
     secondChanceItem.dateAdded = dateAdded

@@ -31,6 +31,8 @@ function DetailsPage() {
                 }
                 const data = await response.json();
                 setGift(data);
+                console.log(data);
+
             } catch (error) {
                 setError(error.message);
             } finally {
